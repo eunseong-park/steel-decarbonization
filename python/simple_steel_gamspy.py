@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
-from gamspy import Container, Set, Parameter, Variable, Equation, Model, Sum, Sense, Options
+from gamspy import Container, Parameter, Variable, Equation, Model, Sum, Sense, Options
 import sys
+import os
 
 # Initialize Container and load GDX
 # This automatically creates Set/Parameter objects for everything in the GDX
@@ -196,6 +197,11 @@ df_results = pd.DataFrame(results)
 print("\nResults DataFrame:")
 print(df_results.round(2))
 
+# Ensure output directory exists
+output_dir = "output/python"
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
 # Export DataFrame to CSV
-df_results.to_csv("output/gamspy/simple_steel_results.csv", index=False)
-print("Results saved to output/gamspy/simple_steel_results.csv")
+df_results.to_csv(os.path.join(output_dir, "simple_steel_results_gamspy.csv"), index=False)
+print(f"Results saved to {os.path.join(output_dir, 'simple_steel_results_gamspy.csv')}")

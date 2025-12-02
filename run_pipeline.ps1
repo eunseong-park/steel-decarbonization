@@ -11,7 +11,7 @@ if ($LASTEXITCODE -ne 0) { Write-Error "R data generation failed!"; exit 1 }
 
 # Option B: Python Generation (Alternative)
 # Write-Host "  > Running Python Generator..."
-# & .venv\Scripts\python.exe gamspy/simple_steel_data.py
+# & .venv\Scripts\python.exe python/simple_steel_data.py
 
 # 2. GAMS Pipeline (GAMS Model -> R Visualization)
 Write-Host "`n[Step 2] GAMS Pipeline..." -ForegroundColor Cyan
@@ -30,24 +30,44 @@ if (Get-Command gams -ErrorAction SilentlyContinue) {
 Write-Host "`n[Step 3] GAMSPy Pipeline..." -ForegroundColor Cyan
 Write-Host "  > Running GAMSPy Model..."
 if (Test-Path ".venv\Scripts\python.exe") {
-    & .venv\Scripts\python.exe gamspy/simple_steel.py
+    & .venv\Scripts\python.exe python/simple_steel_gamspy.py
 } else {
-    python gamspy/simple_steel.py
+    python python/simple_steel_gamspy.py
 }
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "  > Running Python Visualization..."
     if (Test-Path ".venv\Scripts\python.exe") {
-        & .venv\Scripts\python.exe gamspy/visualize_results.py
+        & .venv\Scripts\python.exe python/visualize_results.py gamspy
     } else {
-        python gamspy/visualize_results.py
+        python python/visualize_results.py gamspy
     }
 } else {
     Write-Warning "  > GAMSPy model failed. Skipping visualization."
 }
 
-# 4. Julia Pipeline (Julia Model -> Julia Visualization)
-Write-Host "`n[Step 4] Julia Pipeline..." -ForegroundColor Cyan
+# 4. Pyomo Pipeline (Pyomo Model -> Python Visualization)
+Write-Host "`n[Step 4] Pyomo Pipeline..." -ForegroundColor Cyan
+Write-Host "  > Running Pyomo Model..."
+if (Test-Path ".venv\Scripts\python.exe") {
+    & .venv\Scripts\python.exe python/simple_steel_pyomo.py
+} else {
+    python python/simple_steel_pyomo.py
+}
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "  > Running Python Visualization..."
+    if (Test-Path ".venv\Scripts\python.exe") {
+        & .venv\Scripts\python.exe python/visualize_results.py pyomo
+    } else {
+        python python/visualize_results.py pyomo
+    }
+} else {
+    Write-Warning "  > Pyomo model failed. Skipping visualization."
+}
+
+# 5. Julia Pipeline (Julia Model -> Julia Visualization)
+Write-Host "`n[Step 5] Julia Pipeline..." -ForegroundColor Cyan
 Write-Host "  > Running Julia Model..."
 julia --project=julia julia/simple_steel.jl
 

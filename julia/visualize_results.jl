@@ -58,18 +58,24 @@ p3 = groupedbar(
 )
 
 # ------------------------------------------------------------------------------
-# Combine and Save
+# Save Plots Separately
 # ------------------------------------------------------------------------------
-# Use @layout macro for explicit layout definition, which often satisfies linters better
-l = @layout [a b c]
-final_plot = plot(p1, p2, p3, layout = l, size = (1200, 500), margin = 5mm)
-
 output_dir = "output/julia"
 if !isdir(output_dir)
     mkpath(output_dir)
 end
 
-output_file = joinpath(output_dir, "julia_plots.pdf")
-savefig(final_plot, output_file)
+# Save P1
+file_p1 = joinpath(output_dir, "plot_total_production.pdf")
+savefig(p1, file_p1)
+println("Saved: $file_p1")
 
-println("Plots saved to: $output_file")
+# Save P2
+file_p2 = joinpath(output_dir, "plot_total_emissions.pdf")
+savefig(p2, file_p2)
+println("Saved: $file_p2")
+
+# Save P3
+file_p3 = joinpath(output_dir, "plot_market_prices.pdf")
+savefig(p3, file_p3)
+println("Saved: $file_p3")

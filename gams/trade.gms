@@ -117,3 +117,5 @@ SOLVE trade using MCP;
 report("Policy 2")
 
 display rep_YM, rep_YA, rep_PA;
+
+execute_unload 'output/gams/trade_results.gdx' 

@@ -18,26 +18,10 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $scriptDir
 
 # Run Julia Pkg commands
-Write-Host "Installing/Updating Dependencies..." -ForegroundColor Yellow
+Write-Host "Instantiating Dependencies from Project.toml..." -ForegroundColor Yellow
 
-# Create a temporary Julia script to avoid PowerShell/Shell quoting hell
-$setupScriptContent = @"
-import Pkg
-Pkg.add(["JuMP", "HiGHS", "PATHSolver", "DataFrames", "CSV", "HDF5", "StatsPlots", "Measures"])
-Pkg.instantiate()
-Pkg.precompile()
-"@
-
-$tempScript = "setup_temp.jl"
-Set-Content -Path $tempScript -Value $setupScriptContent
-
-# Run the script
-try {
-    julia --project=$EnvPath $tempScript
-} finally {
-    # Clean up
-    if (Test-Path $tempScript) { Remove-Item $tempScript }
-}
+# Instantiate the environment (downloads and installs packages listed in Manifest.toml/Project.toml)
+julia --project=$EnvPath -e 'import Pkg; Pkg.instantiate()'
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "`n[Success] Julia environment is ready." -ForegroundColor Green

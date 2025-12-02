@@ -30,11 +30,11 @@ if ($IsWindows) {
 # Install requirements
 Write-Host "Installing/Updating Dependencies..." -ForegroundColor Yellow
 pip install --upgrade pip
-pip install -r gamspy/requirements.txt
+pip install -r python/requirements.txt
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "`n[Success] Python environment is ready." -ForegroundColor Green
-    Write-Host "To use it, run: .venv\Scripts\Activate.ps1; python gamspy/simple_steel.py"
+    Write-Host "To use it, run: .venv\Scripts\Activate.ps1; python python/simple_steel_gamspy.py"
 } else {
     Write-Error "`n[Error] Failed to install Python dependencies."
     exit 1
