@@ -1,0 +1,5 @@
+gamspy
+numpy
+pandas
+matplotlib
+h5py

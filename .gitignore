@@ -1,0 +1,38 @@
+# Ignore generated data
+data/generated/
+data/*.gdx
+data/*.h5
+data/*.arrow
+data/*.parquet
+
+# Ignore raw data (SENSITIVE)
+data/raw/
+
+# Ignore virtual environments
+.venv/
+.julia/
+
+# Ignore outputs
+output/
+
+# Ignore temporary scripts
+setup_temp.jl
+
+# Ignore GAMS artifacts
+*.lst
+
+# Ignore LaTeX artifacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+
+# Ignore Julia outputs in source folder
+julia/*.csv
+
+# Ignore OS/Editor files
+.DS_Store
+.vscode/
+*.code-workspace
