@@ -9,23 +9,24 @@
     *   `requirements.txt`: Python dependencies.
 *   **`julia/`**: Julia implementation.
 *   **`R/`**: Data generation and visualization.
-    *   `simple_steel_data.R`: Generates input data and exports to GDX (`data/simple_steel_data.gdx`).
+    *   `simple_steel_data.R`: Generates input data and exports to GDX (`data/simple_steel_data.gdx`) and HDF5.
     *   `visualize_results.R`: Visualizes results from GDX.
 *   **`data/`**: Input data.
     *   `raw/`: CSV files for model parameters.
     *   `simple_steel_data.gdx`: Generated GDX data file.
+    *   `generated/steel_data.h5`: Generated HDF5 data file.
 *   **`output/`**: Generated results.
 
 ## Setup
 
 ### Python Environment
-To create a `.venv` and install dependencies (`gamspy`, `pandas`, `pyarrow`, etc.):
+To create a `.venv` and install dependencies (`gamspy`, `pandas`, `h5py`, etc.):
 ```powershell
 ./setup_python.ps1
 ```
 
 ### Julia Environment
-To automate the creation of the Julia virtual environment and install dependencies (`JuMP`, `Parquet`, etc.), run the provided setup script:
+To automate the creation of the Julia virtual environment and install dependencies (`JuMP`, `HDF5`, etc.), run the provided setup script:
 ```powershell
 ./setup_julia.ps1
 ```
@@ -34,14 +35,19 @@ To automate the creation of the Julia virtual environment and install dependenci
 
 The intended workflow for this project is:
 
-1.  **Data Generation**: Run the R script to generate the input data and export it to a GDX file.
-    ```bash
-    Rscript R/simple_steel_data.R
-    ```
-    *Output*: `data/simple_steel_data.gdx`
+1.  **Data Generation**: Run either the R or Python script to generate the input data (GDX for GAMS/GAMSPy, HDF5 for Julia).
+    *   **Option A (R)**:
+        ```bash
+        Rscript R/simple_steel_data.R
+        ```
+    *   **Option B (Python)**:
+        ```bash
+        python gamspy/simple_steel_data.py
+        ```
+    *Output*: `data/simple_steel_data.gdx` and `data/generated/steel_data.h5`
 
 2.  **Model Execution**:
-    *   **GAMS**: Run the GAMS model. It contains its own data generation logic for demonstration purposes.
+    *   **GAMS**: Run the GAMS model. It reads inputs from `data/simple_steel_data.gdx`.
         ```bash
         gams gams/simple_steel.gms
         ```

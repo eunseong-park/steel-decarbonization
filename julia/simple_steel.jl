@@ -257,7 +257,7 @@ df_plants = DataFrame(
     Capacity_R=[value(R[i]) for i in I]
 )
 
-CSV.write("julia/results_plants.csv", df_plants)
+CSV.write("output/julia/results_plants.csv", df_plants)
 println("Saved: results_plants.csv")
 
 # ---------------------------------------------------------

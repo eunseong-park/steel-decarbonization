@@ -1,0 +1,11 @@
+t,f,value
+bof,iore,1.401
+bof,coal,0.653
+bof,scrp,0.252
+bof,elec,0.033
+eaf,scrp,1.026
+eaf,elec,0.523
+dri,scrp,0.579
+dri,iore,0.852
+dri,elec,0.707
+dri,ngas,7.199
