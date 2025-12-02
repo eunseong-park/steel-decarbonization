@@ -1,9 +1,9 @@
 # run_pipeline.ps1
 
-Write-Host "--- Starting Pipeline ---" -ForegroundColor Cyan
+Write-Host "--- Starting Pipeline ---" -ForegroundColor Green
 
 # 1. Data Generation (Common)
-Write-Host "`n[Step 1] Generating Data..." -ForegroundColor Green
+Write-Host "`n[Step 1] Generating Data..." -ForegroundColor Cyan
 # Option A: R Generation
 Write-Host "  > Running R Generator..."
 Rscript R/simple_steel_data.R
@@ -18,7 +18,7 @@ Write-Host "`n[Step 2] GAMS Pipeline..." -ForegroundColor Cyan
 # Check if GAMS is in PATH (Simple check)
 if (Get-Command gams -ErrorAction SilentlyContinue) {
     Write-Host "  > Running GAMS Model..."
-    gams gams/simple_steel.gms
+    gams gams/simple_steel.gms o=gams/simple_steel.lst
     
     Write-Host "  > Running R Visualization (for GAMS results)..."
     Rscript R/visualize_results.R
@@ -52,10 +52,6 @@ Write-Host "  > Running Julia Model..."
 julia --project=julia julia/simple_steel.jl
 
 if ($LASTEXITCODE -eq 0) {
-    # Run Julia Trade Model (Optional)
-    Write-Host "  > Running Julia Trade Model..."
-    julia --project=julia julia/trade.jl
-
     Write-Host "  > Running Julia Visualization..."
     julia --project=julia julia/visualize_results.jl
 } else {
