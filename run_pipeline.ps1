@@ -2,7 +2,7 @@
 
 Write-Host "--- Starting Pipeline ---" -ForegroundColor Cyan
 
-# 1. Data Generation
+# 1. Data Generation (Common)
 Write-Host "`n[Step 1] Generating Data..." -ForegroundColor Green
 # Option A: R Generation
 Write-Host "  > Running R Generator..."
@@ -13,32 +13,51 @@ if ($LASTEXITCODE -ne 0) { Write-Error "R data generation failed!"; exit 1 }
 # Write-Host "  > Running Python Generator..."
 # & .venv\Scripts\python.exe gamspy/simple_steel_data.py
 
-# 2. Model Execution
-# Run GAMSPy Model
-Write-Host "`n[Step 2a] Running GAMSPy Model..." -ForegroundColor Green
+# 2. GAMS Pipeline (GAMS Model -> R Visualization)
+Write-Host "`n[Step 2] GAMS Pipeline..." -ForegroundColor Cyan
+# Check if GAMS is in PATH (Simple check)
+if (Get-Command gams -ErrorAction SilentlyContinue) {
+    Write-Host "  > Running GAMS Model..."
+    gams gams/simple_steel.gms
+    
+    Write-Host "  > Running R Visualization (for GAMS results)..."
+    Rscript R/visualize_results.R
+} else {
+    Write-Warning "  > GAMS not found. Skipping GAMS pipeline."
+}
+
+# 3. GAMSPy Pipeline (GAMSPy Model -> Python Visualization)
+Write-Host "`n[Step 3] GAMSPy Pipeline..." -ForegroundColor Cyan
+Write-Host "  > Running GAMSPy Model..."
 if (Test-Path ".venv\Scripts\python.exe") {
     & .venv\Scripts\python.exe gamspy/simple_steel.py
 } else {
     python gamspy/simple_steel.py
 }
-if ($LASTEXITCODE -ne 0) { Write-Warning "GAMSPy model execution failed." }
 
-# Run Julia Model
-Write-Host "`n[Step 2b] Running Julia Model..." -ForegroundColor Green
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "  > Running Python Visualization..."
+    if (Test-Path ".venv\Scripts\python.exe") {
+        & .venv\Scripts\python.exe gamspy/visualize_results.py
+    } else {
+        python gamspy/visualize_results.py
+    }
+} else {
+    Write-Warning "  > GAMSPy model failed. Skipping visualization."
+}
+
+# 4. Julia Pipeline (Julia Model -> Julia Visualization)
+Write-Host "`n[Step 4] Julia Pipeline..." -ForegroundColor Cyan
+Write-Host "  > Running Julia Model..."
 julia --project=@steel_env julia/simple_steel.jl
-if ($LASTEXITCODE -ne 0) { Write-Warning "Julia model execution failed." }
 
-# 3. Visualization
-Write-Host "`n[Step 3] Visualizing Results..." -ForegroundColor Green
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "  > Running Julia Visualization..."
+    julia --project=@steel_env julia/visualize_results.jl
+} else {
+    Write-Warning "  > Julia model failed. Skipping visualization."
+}
 
-# R Visualization
-Write-Host "  > Running R Visualization..."
-Rscript R/visualize_results.R
-
-# Julia Visualization
-Write-Host "  > Running Julia Visualization..."
-julia --project=@steel_env julia/visualize_results.jl
-
-if ($LASTEXITCODE -ne 0) { Write-Error "Visualization failed!"; exit 1 }
+Write-Host "`n--- Pipeline Complete ---" -ForegroundColor Green
 
 Write-Host "`n--- Pipeline Complete ---" -ForegroundColor Cyan

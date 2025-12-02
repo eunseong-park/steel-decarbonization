@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from gamspy import Container, Set, Parameter, Variable, Equation, Model, Sum, Sense, Options
 import sys
 
@@ -190,57 +189,13 @@ simple.solve()
 collect_results("Tax ($10/tCO2)")
 
 # ------------------------------------------------------------------------------
-# 5. PANDAS DATAFRAME & VISUALIZATION
+# 5. EXPORT RESULTS
 # ------------------------------------------------------------------------------
 
 df_results = pd.DataFrame(results)
 print("\nResults DataFrame:")
 print(df_results.round(2))
 
-# Set up the plot
-fig, axes = plt.subplots(1, 3, figsize=(15, 6))
-fig.suptitle("Steel Industry Model Results", fontsize=16)
-
-# Plot 1: Production
-axes[0].bar(df_results["Scenario"], df_results["Production"], color="steelblue")
-axes[0].set_title("Total Steel Production (Mt)")
-axes[0].set_ylabel("Million Tonnes")
-axes[0].grid(axis="y", linestyle="--", alpha=0.7)
-
-# Plot 2: Emissions
-axes[1].bar(df_results["Scenario"], df_results["Emissions"], color="indianred")
-axes[1].set_title("Total Carbon Emissions (MtCO2)")
-axes[1].set_ylabel("Mt CO2")
-axes[1].grid(axis="y", linestyle="--", alpha=0.7)
-
-# Plot 3: Prices (Grouped Bar for Steel vs Carbon)
-# Using dual axis or just side-by-side. Let's do side-by-side bars.
-x = np.arange(len(df_results["Scenario"]))
-width = 0.35
-
-rects1 = axes[2].bar(
-    x - width / 2, df_results["Steel Price"], width, label="Steel Price (USD/t)", color="grey"
-)
-rects2 = axes[2].bar(
-    x + width / 2,
-    df_results["Carbon Price"],
-    width,
-    label="Carbon Price (USD/tCO2)",
-    color="green",
-)
-
-axes[2].set_title("Market Prices")
-axes[2].set_ylabel("Price")
-axes[2].set_xticks(x)
-axes[2].set_xticklabels(df_results["Scenario"])
-axes[2].legend()
-axes[2].grid(axis="y", linestyle="--", alpha=0.7)
-
-plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-plt.show()
-
-# Optional: Export DataFrame to CSV
+# Export DataFrame to CSV
 df_results.to_csv("output/gamspy/simple_steel_results.csv", index=False)
-
-# save figure
-fig.savefig("output/gamspy/simple_steel_results.pdf")
+print("Results saved to output/gamspy/simple_steel_results.csv")

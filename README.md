@@ -7,7 +7,7 @@
 *   **`gamspy/`**: Python implementation using GAMSPy.
     *   `simple_steel.py`: Core model.
     *   `requirements.txt`: Python dependencies.
-*   **`julia/`**: Julia implementation.
+*   **`julia/`**: Julia implementation using JuMP.
 *   **`R/`**: Data generation and visualization.
     *   `simple_steel_data.R`: Generates input data and exports to GDX (`data/simple_steel_data.gdx`) and HDF5.
     *   `visualize_results.R`: Visualizes results from GDX.
@@ -33,34 +33,26 @@ To automate the creation of the Julia virtual environment and install dependenci
 
 ## Workflow
 
-The intended workflow for this project is:
+The pipeline is organized by language ecosystem:
 
-1.  **Data Generation**: Run either the R or Python script to generate the input data (GDX for GAMS/GAMSPy, HDF5 for Julia).
-    *   **Option A (R)**:
-        ```bash
-        Rscript R/simple_steel_data.R
-        ```
-    *   **Option B (Python)**:
-        ```bash
-        python gamspy/simple_steel_data.py
-        ```
-    *Output*: `data/simple_steel_data.gdx` and `data/generated/steel_data.h5`
+1.  **Data Generation (Common)**:
+    *   Generates `data/simple_steel_data.gdx` and `data/generated/steel_data.h5`.
+    *   Run via `Rscript R/simple_steel_data.R` (or Python alternative).
 
-2.  **Model Execution**:
-    *   **GAMS**: Run the GAMS model. It reads inputs from `data/simple_steel_data.gdx`.
-        ```bash
-        gams gams/simple_steel.gms
-        ```
-    *   **GAMSPy**: Run the Python model.
-        ```bash
-        python gamspy/simple_steel.py
-        ```
+2.  **GAMS Pipeline**:
+    *   **Model**: `gams/simple_steel.gms` (Reads GDX).
+    *   **Viz**: `R/visualize_results.R` (Reads GAMS output GDX).
 
-3.  **Visualization**: Run the R visualization script.
-    ```bash
-    Rscript R/visualize_results.R
-    ```
+3.  **GAMSPy Pipeline**:
+    *   **Model**: `python gamspy/simple_steel.py` (Reads GDX).
+    *   **Viz**: `python gamspy/visualize_results.py` (Reads CSV output).
 
-## Orchestration
+4.  **Julia Pipeline**:
+    *   **Model**: `julia julia/simple_steel.jl` (Reads HDF5).
+    *   **Viz**: `julia julia/visualize_results.jl` (Reads CSV output).
 
-A PowerShell script `run_pipeline.ps1` is provided to automate the data generation and visualization steps.
+### Automation
+Run the full pipeline using the PowerShell script:
+```powershell
+./run_pipeline.ps1
+```

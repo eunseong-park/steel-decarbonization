@@ -1,33 +1,12 @@
 $title  "A Simple Steel Industry Model"
 
-* Check if data exists
-$if not exist data/simple_steel_data.gdx $abort "Data file not found. Please run 'python gamspy/simple_steel_data.py' or 'Rscript R/simple_steel_data.R' first."
-
-SETS
-    i           "Steel plants"
-    f           "Factors"
-    t           "Technology type"
-    it(i,t)     "Link between plants and technologies"
-;
-
-PARAMETERS
-    abar(t,f)   "Factor use per ton crude steel production"
-    vbar(f)     "Reference factor market prices"
-    rho(f)      "Price elasticity in factor supply"
-    kappa(f)    "Carbon emissions coefficient"
-    epsilon     "Price elasticity of steel demand"
-    tau(i,f)    "Plant-specific additional cost (e.g. transport)"
-    ylim(i)     "Plant-specific production capacity"
-    ybar(i)     "Reference output by plant"
-    dbar        "Reference aggregate demand"
-    chi         "Emissions reduction target" 
-;
-
-* Load data from GDX
-$gdxin data/simple_steel_data.gdx
-$load i f t it
-$load abar vbar rho kappa epsilon tau ylim ybar dbar chi
-$gdxin
+$ifthen not exist 'data/generated/steel_data.gdx'
+$log 'Generating data file...' 
+$call 'gams gams/simple_steel_data.gms'
+$else
+$log 'Data file exists, loading data...'
+$endif
+$declareAndLoad 'data/generated/steel_data.gdx'
 
 PARAMETERS
     ebar(f)     "Reference carbon emissions"
@@ -132,7 +111,7 @@ report("emissions_level", scenario) = (report("emissions", scenario) / sum(f, eb
 report("steel_price", scenario) = P.l; \
 report("steel_price_level", scenario) = (P.l / pbar) * 100; \
 report("carbon_price", scenario) = W.l; \
-report("share_carbon_costs", scenario) = sum((i,f), W.l * kappa(f) * sum(it(i, t), abar(t, f) * Y.l(i))) / (P.l * sum(i, Y.l(i))) * 100;
+report("share_carbon_costs", scenario) = sum((i,f), W.l * kappa(f) * sum(it(i, t), abar(t, f) * Y.l(i)));
 
 * Write out benchmark results
 write_report("benchmark")

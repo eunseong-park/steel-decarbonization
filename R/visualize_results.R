@@ -125,10 +125,19 @@ p3 <- ggplot(
     fill = "Price Type"
   ) +
   scale_fill_manual(
-    values = c("Steel Price" = "grey", "Carbon Price" = "forestgreen")
+    values = c("Steel Price" = "grey", "Carbon Price" = "forestgreen"),
+    name = NULL
   ) +
-  my_theme
-
+  theme_minimal() +
+  theme(
+    legend.position = "inside",
+    legend.position.inside = c(0.12, 0.9),
+    legend.background = element_rect(
+      fill = "white",
+      linetype = "solid",
+      color = "gray"
+    )
+  )
 
 # 4. Save ----------------------------------------------------------------
 
