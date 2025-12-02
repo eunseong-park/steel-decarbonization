@@ -49,15 +49,17 @@ if ($LASTEXITCODE -eq 0) {
 # 4. Julia Pipeline (Julia Model -> Julia Visualization)
 Write-Host "`n[Step 4] Julia Pipeline..." -ForegroundColor Cyan
 Write-Host "  > Running Julia Model..."
-julia --project=@steel_env julia/simple_steel.jl
+julia --project=julia julia/simple_steel.jl
 
 if ($LASTEXITCODE -eq 0) {
+    # Run Julia Trade Model (Optional)
+    Write-Host "  > Running Julia Trade Model..."
+    julia --project=julia julia/trade.jl
+
     Write-Host "  > Running Julia Visualization..."
-    julia --project=@steel_env julia/visualize_results.jl
+    julia --project=julia julia/visualize_results.jl
 } else {
     Write-Warning "  > Julia model failed. Skipping visualization."
 }
 
 Write-Host "`n--- Pipeline Complete ---" -ForegroundColor Green
-
-Write-Host "`n--- Pipeline Complete ---" -ForegroundColor Cyan

@@ -2,7 +2,7 @@
 
 # --- Configuration ---
 # Set this to a local path (e.g., "julia") or a shared name (e.g., "@steel_env")
-$EnvPath = "@steel_env" 
+$EnvPath = "julia" 
 # ---------------------
 
 Write-Host "--- Setting up Julia Virtual Environment ($EnvPath) ---" -ForegroundColor Cyan

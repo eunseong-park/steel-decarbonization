@@ -48,8 +48,15 @@ The pipeline is organized by language ecosystem:
     *   **Viz**: `python gamspy/visualize_results.py` (Reads CSV output).
 
 4.  **Julia Pipeline**:
-    *   **Model**: `julia julia/simple_steel.jl` (Reads HDF5).
-    *   **Viz**: `julia julia/visualize_results.jl` (Reads CSV output).
+    *   **Model**:
+        ```bash
+        julia --project=julia julia/simple_steel.jl
+        julia --project=julia julia/trade.jl
+        ```
+    *   **Viz**:
+        ```bash
+        julia --project=julia julia/visualize_results.jl
+        ```
 
 ### Automation
 Run the full pipeline using the PowerShell script:
