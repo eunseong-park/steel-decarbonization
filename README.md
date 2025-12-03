@@ -9,7 +9,7 @@
 This repository serves as the codebase for a group project aimed at analyzing the economic and environmental impacts of decarbonizing the global steel industry. The objective is to implement, extend, and analyze a partial equilibrium model using one of the provided programming frameworks (GAMS, Python/GAMSPy/Pyomo, Julia/JuMP). Students are expected to use this codebase to generate results for their final report and presentation.
 
 **Model Summary:**
-The starting point is a simplified single-country partial equilibrium model of the steel industry, largely based on Mathiesen and Maestad (2004). The model simulates heterogeneous steel plants employing different technologies (BOF, EAF, DRI) and consuming various factors (iron ore, coal, scrap, electricity, natural gas). It is calibrated using synthetic data to establish a baseline for economic analysis.
+The starting point is a simplified single-country partial equilibrium model of the steel industry, largely based on Mathiesen and Mæstad (Energy Journal 2004). The model simulates heterogeneous steel plants employing different technologies (BOF, EAF, DRI) and consuming various factors (iron ore, coal, scrap, electricity, natural gas). It is calibrated using synthetic data to establish a baseline for economic analysis. A detailed description of the model is provided in `tex/description.pdf`.
 
 **Key Tasks:**
 
@@ -19,18 +19,14 @@ The starting point is a simplified single-country partial equilibrium model of t
 
 ## Modeling Frameworks
 
-The mathematical model is equivalently implemented in several frameworks. A detailed description of the model is provided in `tex/description.pdf`.
+The model is equivalently implemented in the following frameworks:
 
-* **GAMS**
-
-  * **GAMS**: (General Algebraic Modeling System) A high-level modeling system for mathematical programming and optimization.
-* **Python**
-
-  * **GAMSPy**: A Python package that combines the flexibility of Python with the high-performance optimization capabilities of the GAMS execution system.
-  * **Pyomo**: (Python Optimization Modeling Objects) A Python-based open-source optimization modeling language that supports defining and solving diverse optimization problems.
-* **Julia**
-
-  * **JuMP**: (Julia for Mathematical Programming) A domain-specific modeling language for mathematical optimization embedded in Julia, known for its speed and intuitive syntax.
+*   **GAMS**: (General Algebraic Modeling System) A standalone, proprietary modeling system with a dedicated language, a prominent and robust tool for mathematical programming and optimization.
+*   **Python**:
+    *   **GAMSPy** ([GitHub](https://github.com/GAMS-dev/gamspy)): A connector package that brings the performance of the GAMS execution engine into the Python environment.
+    *   **Pyomo** ([GitHub](https://github.com/Pyomo/pyomo)): A pure Python framework that allows users to define optimization models using standard Python objects and libraries.
+*   **Julia**:
+    *   **JuMP** ([GitHub](https://github.com/jump-dev/JuMP.jl)): (Julia for Mathematical Programming) A modeling language embedded directly in Julia, leveraging Julia's compiler for high-speed model generation.
 
 ## Directory Structure
 
@@ -54,6 +50,10 @@ The mathematical model is equivalently implemented in several frameworks. A deta
 
 ## Setup
 
+### Prerequisites
+
+Before proceeding, ensure that GAMS (if using the standalone system), Python, Julia, and R (with `Rscript` accessible) are all installed and their executables are available in your system's `PATH`. Note that GAMSPy includes its own GAMS execution system, so a separate GAMS installation is not required for GAMSPy models.
+
 ### Python Environment
 
 To create a `.venv` and install dependencies (`gamspy`, `pandas`, `h5py`, etc.):
@@ -70,12 +70,23 @@ To automate the creation of the Julia virtual environment and install dependenci
 ./setup_julia.ps1
 ```
 
+### R Environment
+
+For data generation and visualization, ensure you have R installed. The scripts handle package installation automatically using the `pacman` package manager.
+
+If you prefer to install dependencies manually:
+
+```r
+install.packages("pacman")
+pacman::p_load(data.table, gamstransfer, hdf5r, ggplot2)
+```
+
 ### Solvers Installation
 
 * **GAMS / GAMSPy**:
 
-  * **GAMS**: Requires a standard GAMS system installation, which includes various solvers (e.g., PATH, CONOPT, CPLEX). Ensure the GAMS system directory is in your system `PATH`.
-  * **GAMSPy**: The `gamspy` package automatically installs a bundled GAMS execution system (via the `gamspy_base` dependency) which includes the necessary solvers. A separate GAMS installation is not required.
+  *   **GAMS**: Requires a standard GAMS system installation, which includes various solvers (e.g., PATH, CONOPT, CPLEX).
+  *   **GAMSPy**: The `gamspy` package automatically installs a bundled GAMS execution system (via the `gamspy_base` dependency) which includes the necessary solvers. A separate GAMS installation is not required.
   * **Licenses**: Through the GAMS Academic Program ([https://academic.gams.com/](https://academic.gams.com/)), FREE + full-featured GAMSPy licenses and GAMS community licenses are available for academic purposes.
 * **Julia**: Solver binaries (e.g., HiGHS, PATH) are automatically managed and downloaded by the Julia package manager.
 * **Pyomo**: Requires manual installation of external solvers. Ensure the solver executables are added to your system's `PATH` environment variable.

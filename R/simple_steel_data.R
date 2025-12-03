@@ -1,7 +1,7 @@
 # R/simple_steel_data.R
 
-library(data.table)
-library(gamstransfer)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(data.table, gamstransfer, hdf5r)
 
 set.seed(42) # For reproducibility
 
@@ -84,9 +84,6 @@ print(paste("dbar:", dbar))
 # ------------------------------------------------------------------------------
 # HDF5 EXPORT (Structured)
 # ------------------------------------------------------------------------------
-
-if (!require("hdf5r")) install.packages("hdf5r", repos = "http://cran.us.r-project.org")
-library(hdf5r)
 
 # --- HDF5 Test: Can we create any HDF5 file? ---
 tryCatch({
