@@ -125,6 +125,6 @@ Run the full pipeline using the PowerShell script:
 
 ## Author
 
-Eunseong Park
+Eunseong Park ([eunseong.park@zew.de](mailto:eunseong.park@zew.de))
+
 ZEW – Leibniz Centre for European Economic Research
-[eunseong.park@zew.de](mailto:eunseong.park@zew.de)
