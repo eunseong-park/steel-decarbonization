@@ -12,54 +12,53 @@
 \begin{document}
 
 \title{Emissions Reduction in the Global Steel Industry and Policy Measures}
-\subtitle{A group project topic}
+\subtitle{Group Project Topic}
 \author{Eunseong Park\footnote{eunseong.park@zew.de}}
 \date{December 2025}
 \maketitle
 
 \section*{Context}
-The production of steel is one of the most carbon-intensive industries, 
-accounting for approximately 7\% of global greenhouse gas emissions. 
-Meeting the Paris Agreement goals to limit global warming to below 2°C 
-will require significant decarbonization of the steel industry. 
-However, there is a concern that unilateral climate policies, such as 
-(sub-global) carbon taxes or emissions trading systems, 
-may lead to carbon leakage, whereby emissions simply shift to other 
-countries with less stringent climate policies. 
-This has led to calls for border carbon adjustments, 
-which seek to level the playing field for domestic producers and ensure 
-that carbon leakage does not occur. 
-In this context, policymakers around the world are exploring different 
-climate policy instruments to reduce emissions in the steel industry.
+The steel industry is among the most carbon-intensive sectors, accounting for
+approximately 7\% of global greenhouse gas emissions. Meeting the goals of the
+Paris Agreement, which aim to limit global warming to well below 2°C, requires
+substantial decarbonization of steel production. Unilateral climate
+policies (for example, sub-national carbon taxes or emissions trading
+systems) can create a risk of carbon leakage, whereby emissions shift to
+countries with less stringent climate policies. This concern has prompted
+calls for border carbon adjustments, which aim to level the playing field for
+domestic producers and reduce incentives for leakage. Policymakers worldwide
+are therefore exploring different policy instruments to lower emissions in
+the steel sector.
 
 \section*{Starting Point}
-We will provide a simple single-country partial equilibrium model of the steel industry. 
+We provide a simple, single-country partial-equilibrium model of the steel
+industry as a baseline.
 \subsection*{Tasks}
 \begin{itemize}
-    \item Extend the model to a multi-region model. 
-    Simulate the impact of various policy instruments on the steel industry's 
-    greenhouse gas emissions, such as carbon taxes, emissions trading systems, 
-    and technology standards.
-    \item Assess the effectiveness of climate policy instruments for reducing
-     emissions in the steel industry. Calculate the potential carbon leakage 
-     rate and discuss the implications of this phenomenon for climate policy design.
-    \item Evaluate the effectiveness of border carbon adjustments in mitigating 
-    this risk. Analyze the trade-offs between protecting domestic producers and 
-    ensuring global emissions reductions.
+    \item Extend the model to a multi-region framework and simulate the
+    impacts of various policy instruments (carbon taxes, emissions trading
+    systems, and technology standards) on the steel sector's greenhouse gas
+    emissions.
+    \item Assess the effectiveness of these climate policy instruments in
+    reducing emissions. Compute potential carbon-leakage rates and discuss the
+    implications for policy design.
+    \item Evaluate the effectiveness of border carbon adjustments in
+    mitigating leakage, and analyze the trade-offs between protecting domestic
+    producers and achieving global emissions reductions.
 \end{itemize}
 
 \pagebreak
 
 \section*{A Simple Steel Industry Model}
-This simple model is largely based on the model by Mathiesen and Maestad (2004).\footnote{
-    Mathiesen, Lars, and Ottar Maestad. “Climate Policy and the Steel Industry: 
+This model is largely based on Mathiesen and Mæstad  (2004)\footnote{
+    Mathiesen, Lars, and Ottar Mæstad . “Climate Policy and the Steel Industry: 
     Achieving Global Emission Reductions by an Incomplete Climate Agreement.” 
     The Energy Journal 25, no. 4 (2004): 91–114. 
     \url{https://doi.org/10.5547/ISSN0195-6574-EJ-Vol25-No4-5}.}
 \subsection*{Sets}
 \begin{itemize}
     \item Steel plants \(i \in I = \{1, 2, 3, ..., n\}\)
-    \item Factors \(f \in F = \{\text{Iron ore, Coking coal, Steel scrap, Electricity, Natural gas}\}\)
+    \item Factors \(f \in F = \{\text{Iron Ore, Coking Coal, Steel Scrap, Electricity, Natural Gas}\}\)
     \item Technologies \(t \in T = \{\text{BOF, EAF, DRI}\}\)
 \end{itemize}
 Each steel plant will be mapped to a technology with the following notation: 
@@ -67,12 +66,12 @@ the technology of the steel plant \(i\) is \( t(i) \).
 
 \subsection*{Parameters}
 \begin{itemize}
-    \item Factor use per ton crude steel production \(a_{t,f}\):
+    \item Factor use per tonne crude steel production \(a_{t,f}\):
     \begin{center}
     \begin{tabular}{ cccccc }
         \hline
-        Technology & Iron ore & Coking Coal & Steel scrap & Electricity & Natural Gas \\
-                   & (ton)    & (ton)       & (ton)       & (MWh)       & (ton)       \\
+        Technology & Iron Ore & Coking Coal & Steel Scrap & Electricity & Natural Gas \\
+               & (tonne)  & (tonne)     & (tonne)     & (MWh)       & (tonne)     \\
         \hline
         BOF        & 1.401    & 0.653       & 0.252       & 0.033       &             \\
         EAF        &          &             & 1.026       & 0.523       &             \\
@@ -80,20 +79,20 @@ the technology of the steel plant \(i\) is \( t(i) \).
         \hline
        \end{tabular}
     \end{center}
-    \item Reference factor market prices (USD per ton or MWh) \(\bar{V}_f\):
+    \item Reference factor market prices (USD per unit: tonne for materials, MWh for electricity) \(\bar{V}_f\):
     \begin{center}
         \begin{tabular}{ cccccc } 
             \hline
-            Iron ore & Coking Coal & Steel scrap & Electricity & Natural Gas \\
+            Iron Ore & Coking Coal & Steel Scrap & Electricity & Natural Gas \\
             33.0     & 63.0        & 136.0       & 70.0        & 4.3         \\
             \hline
            \end{tabular}
     \end{center}
-    \item Carbon emissions coefficients (\tcooe{} per ton or MWh) \(\kappa_f \): 
+    \item Carbon emissions coefficients (\tcooe{} per tonne or MWh) \(\kappa_f \): 
     \begin{center}
         \begin{tabular}{ cccccc } 
             \hline
-            Iron ore & Coking Coal & Steel scrap & Electricity & Natural Gas \\
+            Iron Ore & Coking Coal & Steel Scrap & Electricity & Natural Gas \\
             0.02     & 2.76        & 0.01        & 0.29        & 2.34        \\
             \hline
            \end{tabular}
@@ -102,7 +101,7 @@ the technology of the steel plant \(i\) is \( t(i) \).
     \begin{center}
         \begin{tabular}{ cccccc } 
             \hline
-            Iron ore & Coking Coal & Steel scrap & Electricity & Natural Gas \\
+            Iron Ore & Coking Coal & Steel Scrap & Electricity & Natural Gas \\
             1.0      & 2.0         & 0.5         & 0           & 0           \\
             \hline
            \end{tabular}
@@ -115,52 +114,49 @@ the technology of the steel plant \(i\) is \( t(i) \).
 \pagebreak
 
 \subsection*{Calibration and reference point}
-To start the model, we need to set initial values for the variables. 
-Doing so will allow us to solve our model as expected. 
-However, since we are simplifying reality with many assumptions, 
-the model will not completely replicate every detail of empirical data. 
-Therefore, to conduct our economic analysis, 
-we will construct a price for crude steel and production quantities of each plants 
-that are consistent with the cost structure and demand constraint of the model,
-and use them as the reference point.
+To run the model, we set initial values for the variables. These values allow
+the model to be solved, but because the model relies on simplifying
+assumptions it will not reproduce every detail of empirical data. For our
+analysis, we therefore construct a reference crude steel price and plant-level
+production quantities that are consistent with the model's cost structure and
+demand constraint; these serve as the reference point.
 
-In the gams file, some fictive plants are created. To make these plants heterogenous, 
-we assume that they have some additional additive costs 
-\(\tau_{i,f} \sim U(0, 0.1)\) when using each factor. 
-They are also different with respect to their capacities 
-\(\hat{Y}_i \sim U(10, 15)\). 
-Then we assume for the moment that their production quantities are
-\(\bar{Y}_i = \hat{Y}_i - \delta_i\) where \(\delta_i \sim U(0, 5)\).
-Our reference demand \(\bar{D}\) is then the sum of all production quantities: 
-\( \bar{D} = \sum_{i \in I} \bar{Y}_i\) and we solve the following problem:
+In the GAMS file, we create a set of fictitious plants. To make these plants
+heterogeneous, we assume additive, factor-specific costs
+\(\tau_{i,f} \sim U(0, 0.1)\). Capacities are drawn from
+\(\hat{Y}_i \sim U(10, 15)\). For the reference production of each plant, we
+assume
+\(\bar{Y}_i = \hat{Y}_i - \delta_i\) with \(\delta_i \sim U(0, 5)\).
+Reference demand \(\bar{D}\) is the sum of those production quantities,
+\( \bar{D} = \sum_{i \in I} \bar{Y}_i\), and we solve the following problem:
 \begin{align*}
     \min_{\{Y_i\}_{i\in I}} & \sum_{i \in I} \sum_{f \in F} a_{t(i), f} (\bar{V}_f + \tau_{i,f}) Y_i \\
     \text{subject to } \quad  & \sum_{i \in I} Y_i \geq \bar{D} 
     \quad \text{ and } \quad  \hat{Y}_i \geq Y_i \quad \text{ for all } i \in I.
 \end{align*}
 
-Then we get our reference point as follows: 
+We obtain the reference point as follows:
 \begin{itemize}
-    \item The reference price for crude steel \(\bar{P}\) is the shadow price 
-    of the demand constraint. 
-    \item The reference capital rental rates \(\bar{R}_i\) are given 
-    by the negative of the shadow prices of the capacity constraints. 
-    \item Also, the production quantities of each plants that solves 
-    this problem are now the reference quantities. 
-    \item Then, we get the following reference quantities for factor inputs:
-    \[ \bar{H}_f = \sum_{i \in I} a_{t(i), f} \bar{Y}_i \]
-    \item Lastly, the reference emission level from using each factor is given by: 
-    \[ \bar{e}_f = \sum_{i \in I} a_{t(i), f} \kappa_f \bar{Y}_i \]
+    \item The reference price for crude steel, \(\bar{P}\), is the shadow price
+    of the demand constraint.
+    \item The reference capital rental rates, \(\bar{R}_i\), equal the
+    negative of the shadow prices associated with the capacity constraints.
+    \item The production quantities that solve the calibration problem are the
+    reference quantities for each plant.
+    \item Reference factor input quantities are
+    \[ \bar{H}_f = \sum_{i \in I} a_{t(i), f} \bar{Y}_i. \]
+    \item Reference emissions from each factor are
+    \[ \bar{e}_f = \sum_{i \in I} a_{t(i), f} \kappa_f \bar{Y}_i. \]
 \end{itemize}
 
 
 \subsection*{Variables}
 \begin{itemize}
-    \item Quantity of crude steel production by plant \(\mathbf{Y}_i\)
-    \item Price of crude steel \(\mathbf{P}\)
-    \item Price for each factor \(\mathbf{V}_f\)
-    \item Capital rental rate for each plant \(\mathbf{R}_i\)
-    \item Price for carbon emission rights \(\mathbf{W}\)
+    \item Quantity of crude steel produced by plant, \(\mathbf{Y}_i\).
+    \item Price of crude steel, \(\mathbf{P}\).
+    \item Price of each factor, \(\mathbf{V}_f\).
+    \item Capital rental rate for each plant, \(\mathbf{R}_i\).
+    \item Price of carbon emission permits, \(\mathbf{W}\).
 \end{itemize}
 \subsection*{Equations}
 \begin{itemize}
@@ -202,7 +198,7 @@ Then we get our reference point as follows:
         \quad \forall i \in I
     \end{equation}
     
-    \item Market clearance condition for carbon emission rights:
+    \item Market clearance condition for carbon emission permits:
     \begin{equation}
         \chi \left( \sum_{f \in F} \bar{e}_f \right)
         \geq
