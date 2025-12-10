@@ -52,9 +52,9 @@ sha_PM(rr,r) = ref_YM(rr,r) * ref_PM(rr,r) / sum(rr.local, ref_YM(rr,r) * ref_PM
 $macro C_PM(r)	sum(rr.local, sha_PM(rr,r) * (PM(rr,r) / ref_PM(rr,r)))
 
 * Macro for report
-$macro report(scenario)	\
-	rep_YM(scenario,r,rr) = YM.l(r,rr);	\
-	rep_YA(scenario,r) = YA.l(r);	\
+$macro report(scenario) \
+	rep_YM(scenario,r,rr) = YM.l(r,rr); \
+	rep_YA(scenario,r) = YA.l(r); \
 	rep_PA(scenario,r) = PA.l(r);
 
 * Model definition 
@@ -76,7 +76,7 @@ mkt_PM(rr,r).. 	// supply >= demand (A2.7)
 	YM(rr,r) =g= ref_YM(rr,r) * (1 + epsilon * (C_PM(r) - 1));
 
 zpf_YM(rr,r).. 	// unit cost >= price (A2.8)
-	ref_P(rr) + tcost(rr,r) =g= PM(rr,r);  // ref_P(i) nehme unsere produktionsfunktion
+	ref_P(rr) + tcost(rr,r) =g= PM(rr,r);
 
 mkt_PA(r).. 	// supply >= demand (A2.9)
 	YA(r) =g= ref_YA(r) * (1 + epsilon * (PA(r) / ref_PA(r) - 1));
